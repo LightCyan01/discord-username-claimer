@@ -23,13 +23,7 @@ pip install -r requirements.txt
    cd discord-username-claimer
    ```
 
-2. Edit the `claimer.py` file and add your Discord token and desired username.
-
-3. Run the script using the following command:
-
-   ```
-   python claimer.py
-   ```
+2. Open claimer.py and enter your username and auth token.
 
 ## Disclaimer
 
