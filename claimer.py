@@ -45,7 +45,7 @@ def claim_username(url, headers, payload):
                 time.sleep(int(r.headers.get('Retry-After')))
             elif r.status_code == 401:
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                print(f"{timestamp} {Fore.RED}[ERROR] 401 - Unauthorized. Retrying in 2 minutes.{Style.RESET_ALL}\n")
+                print(f"{timestamp} {Fore.RED}[ERROR] 401 - Unauthorized. Retrying in 4 minutes.{Style.RESET_ALL}\n")
                 time.sleep(2 * 60)
             elif r.status_code == 400 and 'username' in r.json():
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -53,12 +53,12 @@ def claim_username(url, headers, payload):
                 return
             else:
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                print(f"{timestamp} {Fore.RED}[ERROR] {r.status_code} (will re-attempt). Retrying in 2 minutes.{Style.RESET_ALL}\n")
+                print(f"{timestamp} {Fore.RED}[ERROR] {r.status_code} (will re-attempt). Retrying in 4 minutes.{Style.RESET_ALL}\n")
                 time.sleep(2 * 60)
     except requests.exceptions.RequestException as e:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         print(f"{timestamp} {Fore.RED}[ERROR] {e}{Style.RESET_ALL}\n")
-        print(f"{timestamp} {Fore.RED}[ERROR] Connection error (will re-attempt). Retrying in 2 minutes.{Style.RESET_ALL}\n")
+        print(f"{timestamp} {Fore.RED}[ERROR] Connection error (will re-attempt). Retrying in 4 minutes.{Style.RESET_ALL}\n")
         time.sleep(2 * 60)
 
 while True:
