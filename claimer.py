@@ -14,12 +14,14 @@ if os.path.isfile('cfg.txt'):
         lines = cfg.readlines()
         username = lines[0].strip().split(': ')[1]
         token = lines[1].strip().split(': ')[1]
+        os.system('cls' if os.name == 'nt' else 'clear')
 else:
     username = input('Enter the username: ')
     token = input('Enter the token: ')
 
     with open('cfg.txt', 'w') as cfg:
         cfg.write(f"username: {username}\nauthorization: {token}")
+        os.system('cls' if os.name == 'nt' else 'clear')
 
 payload = {'username': username}
 headers = {'Authorization': token}
