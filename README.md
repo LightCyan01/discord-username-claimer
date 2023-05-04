@@ -1,6 +1,6 @@
 # Discord Username Claimer
 
-This is a Python script that claims your username on Discord.
+This is a Python script that claims your desired username on Discord.
 
 ## Requirements
 
