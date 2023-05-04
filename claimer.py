@@ -6,8 +6,9 @@ import os
 
 init(autoreset=True)
 
-print(f"{Fore.CYAN}Made by LightCyan01 & Taiga74164{Style.RESET_ALL}")
-print(f"{Fore.CYAN}Will try to claim username every 4 minutes.{Style.RESET_ALL}")
+print(f"{Fore.CYAN}Discord Username Claimer{Style.RESET_ALL}")
+print(f"{Fore.CYAN}The Program will try to claim your desired username every 4 minutes.{Style.RESET_ALL}")
+print(f"{Fore.CYAN}Github: https://github.com/LightCyan01/discord-username-claimer{Style.RESET_ALL}")
 
 if os.path.isfile('cfg.txt'):
     with open('cfg.txt', 'r') as cfg:
@@ -17,7 +18,7 @@ if os.path.isfile('cfg.txt'):
         os.system('cls' if os.name == 'nt' else 'clear')
 else:
     username = input('Enter the username: ')
-    token = input('Enter the token: ')
+    token = input('Enter your auth token: ')
 
     with open('cfg.txt', 'w') as cfg:
         cfg.write(f"username: {username}\nauthorization: {token}")
