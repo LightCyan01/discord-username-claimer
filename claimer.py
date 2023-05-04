@@ -6,6 +6,7 @@ from colorama import init, Fore, Style
 init(autoreset=True)
 
 print(f"{Fore.CYAN}Made by LightCyan01{Style.RESET_ALL}")
+print(f"{Fore.CYAN}Will try to claim username every 4 minutes. (Subject to Change){Style.RESET_ALL}")
 
 payload = {'username': 'USERNAME HERE'}
 headers = {'Authorization': 'TOKEN HERE'}
@@ -44,22 +45,32 @@ def claim_username(url, headers, payload):
                 time.sleep(int(r.headers.get('Retry-After')))
             elif r.status_code == 401:
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                print(f"{timestamp} {Fore.RED}[ERROR] 401 - Unauthorized. Retrying in 30 minutes.{Style.RESET_ALL}\n")
-                time.sleep(30 * 60)
+                print(f"{timestamp} {Fore.RED}[ERROR] 401 - Unauthorized. Retrying in 2 minutes.{Style.RESET_ALL}\n")
+                time.sleep(2 * 60)
             elif r.status_code == 400 and 'username' in r.json():
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 print(f"{timestamp} {Fore.RED}[ERROR] Username '{payload['username']}' is taken.{Style.RESET_ALL}\n")
                 return
             else:
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                print(f"{timestamp} {Fore.RED}[ERROR] {r.status_code} (will re-attempt). Retrying in 30 minutes.{Style.RESET_ALL}\n")
-                time.sleep(30 * 60)
+                print(f"{timestamp} {Fore.RED}[ERROR] {r.status_code} (will re-attempt). Retrying in 2 minutes.{Style.RESET_ALL}\n")
+                time.sleep(2 * 60)
     except requests.exceptions.RequestException as e:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         print(f"{timestamp} {Fore.RED}[ERROR] {e}{Style.RESET_ALL}\n")
-        print(f"{timestamp} {Fore.RED}[ERROR] Connection error (will re-attempt). Retrying in 30 minutes.{Style.RESET_ALL}\n")
-        time.sleep(30 * 60)
+        print(f"{timestamp} {Fore.RED}[ERROR] Connection error (will re-attempt). Retrying in 2 minutes.{Style.RESET_ALL}\n")
+        time.sleep(2 * 60)
 
-url = 'https://discord.com/api/v9/users/@me/pomelo'
+while True:
+    url = 'https://discord.com/api/v9/users/@me/pomelo'
 
-claim_username(url, headers, payload)
+    try:
+        claim_username(url, headers, payload)
+    except KeyboardInterrupt:
+        print(f"\n{Fore.YELLOW}Program stopped manually.{Style.RESET_ALL}")
+        break
+    except:
+        print(f"\n{Fore.RED}[ERROR] Unknown error occurred.{Style.RESET_ALL}")
+        time.sleep(2 * 60)
+    else:
+        time.sleep(2 * 60)
