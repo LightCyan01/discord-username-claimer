@@ -27,6 +27,12 @@ pip install -r requirements.txt
 
 3. Leave it on until you have successfully claimed your username.
 
+## Status Codes
+1. ```200 - Success```
+2. ```429 - Too Many Attempts (Rate Limited)```
+3. ```401 - Unauthorized (You are not yet eligible)```
+4. ```400 - Username Taken```
+
 ## Disclaimer
 
 This script is for educational purposes only. Use it at your own risk. The author is not responsible for any consequences that may result from using this script.
