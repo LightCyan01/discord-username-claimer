@@ -6,8 +6,8 @@ import os
 
 init(autoreset=True)
 
-print(f"{Fore.CYAN}Made by LightCyan01{Style.RESET_ALL}")
-print(f"{Fore.CYAN}Will try to claim username every 4 minutes. (Subject to Change){Style.RESET_ALL}")
+print(f"{Fore.CYAN}Made by LightCyan01 & Taiga74164{Style.RESET_ALL}")
+print(f"{Fore.CYAN}Will try to claim username every 4 minutes.{Style.RESET_ALL}")
 
 if os.path.isfile('cfg.txt'):
     with open('cfg.txt', 'r') as cfg:
@@ -31,10 +31,6 @@ def send_request(url, headers, payload):
         r = requests.post(url, headers=headers, json=payload, timeout=10)
         r.raise_for_status()
         return r
-    except requests.exceptions.RequestException as e:
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"{timestamp} {Fore.RED}[ERROR] {e}{Style.RESET_ALL}\n")
-        raise
 
 def claim_username(url, headers, payload):
     try:
@@ -46,10 +42,11 @@ def claim_username(url, headers, payload):
         else:
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             print(f"{timestamp} {Fore.RED}[ERROR] Your token is invalid.{Style.RESET_ALL}\n")
+            os.remove("cfg.txt")
             return
 
         while True:
-            r = send_request(url, headers, payload)
+            r = requests.post(url, headers, payload, timeout=10)
             if r.status_code == 200:
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 print(f"{timestamp} {Fore.GREEN}[SUCCESS] Claimed username.{Style.RESET_ALL}\n")
