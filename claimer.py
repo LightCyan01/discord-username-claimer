@@ -2,14 +2,27 @@ import requests
 import time
 from datetime import datetime
 from colorama import init, Fore, Style
+import os
 
 init(autoreset=True)
 
 print(f"{Fore.CYAN}Made by LightCyan01{Style.RESET_ALL}")
 print(f"{Fore.CYAN}Will try to claim username every 4 minutes. (Subject to Change){Style.RESET_ALL}")
 
-payload = {'username': 'USERNAME HERE'}
-headers = {'Authorization': 'TOKEN HERE'}
+if os.path.isfile('cfg.txt'):
+    with open('cfg.txt', 'r') as cfg:
+        lines = cfg.readlines()
+        username = lines[0].strip().split(': ')[1]
+        token = lines[1].strip().split(': ')[1]
+else:
+    username = input('Enter the username: ')
+    token = input('Enter the token: ')
+
+    with open('cfg.txt', 'w') as cfg:
+        cfg.write(f"username: {username}\nauthorization: {token}")
+
+payload = {'username': username}
+headers = {'Authorization': token}
 
 def send_request(url, headers, payload):
     try:
