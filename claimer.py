@@ -5,7 +5,7 @@ from colorama import init, Fore, Style
 
 init(autoreset=True)
 
-print(f"{Fore.CYAN}Made by LightCyan01 (Discord: Cawfee#9643){Style.RESET_ALL}")
+print(f"{Fore.CYAN}Made by LightCyan01{Style.RESET_ALL}")
 
 payload = {'username': 'USERNAME HERE'}
 headers = {'Authorization': 'TOKEN HERE'}
