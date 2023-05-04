@@ -31,6 +31,10 @@ def send_request(url, headers, payload):
         r = requests.post(url, headers=headers, json=payload, timeout=10)
         r.raise_for_status()
         return r
+    
+    except:
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"{timestamp} {Fore.RED}[ERROR] Response status code has an error value ({r.status_code}) {Style.RESET_ALL}")
 
 def claim_username(url, headers, payload):
     try:
@@ -38,10 +42,10 @@ def claim_username(url, headers, payload):
         r = requests.get('https://discord.com/api/v9/users/@me', headers=headers, timeout=10)
         if r.status_code == 200:
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            print(f"{timestamp} {Fore.GREEN}[SUCCESS] Token is valid.{Style.RESET_ALL}\n")
+            print(f"{timestamp} {Fore.GREEN}[SUCCESS] Token is valid.{Style.RESET_ALL}")
         else:
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            print(f"{timestamp} {Fore.RED}[ERROR] Your token is invalid.{Style.RESET_ALL}\n")
+            print(f"{timestamp} {Fore.RED}[ERROR] Your token is invalid.{Style.RESET_ALL}")
             os.remove("cfg.txt")
             return
 
@@ -49,28 +53,28 @@ def claim_username(url, headers, payload):
             r = requests.post(url, headers, payload, timeout=10)
             if r.status_code == 200:
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                print(f"{timestamp} {Fore.GREEN}[SUCCESS] Claimed username.{Style.RESET_ALL}\n")
+                print(f"{timestamp} {Fore.GREEN}[SUCCESS] Claimed username.{Style.RESET_ALL}")
                 break
             elif r.status_code == 429:
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                print(f"{timestamp} {Fore.RED}[ERROR] Too many attempts. Retrying in {r.headers.get('Retry-After')} seconds.{Style.RESET_ALL}\n")
+                print(f"{timestamp} {Fore.RED}[ERROR] Too many attempts. Retrying in {r.headers.get('Retry-After')} seconds.{Style.RESET_ALL}")
                 time.sleep(int(r.headers.get('Retry-After')))
             elif r.status_code == 401:
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                print(f"{timestamp} {Fore.RED}[ERROR] 401 - Unauthorized. Retrying in 4 minutes.{Style.RESET_ALL}\n")
+                print(f"{timestamp} {Fore.RED}[ERROR] 401 - Unauthorized. Retrying in 4 minutes.{Style.RESET_ALL}")
                 time.sleep(4 * 60)
             elif r.status_code == 400 and 'username' in r.json():
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                print(f"{timestamp} {Fore.RED}[ERROR] Username '{payload['username']}' is taken.{Style.RESET_ALL}\n")
+                print(f"{timestamp} {Fore.RED}[ERROR] Username '{payload['username']}' is taken.{Style.RESET_ALL}")
                 return
             else:
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                print(f"{timestamp} {Fore.RED}[ERROR] {r.status_code} (will re-attempt). Retrying in 4 minutes.{Style.RESET_ALL}\n")
+                print(f"{timestamp} {Fore.RED}[ERROR] {r.status_code} (will re-attempt). Retrying in 4 minutes.{Style.RESET_ALL}")
                 time.sleep(4 * 60)
     except requests.exceptions.RequestException as e:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"{timestamp} {Fore.RED}[ERROR] {e}{Style.RESET_ALL}\n")
-        print(f"{timestamp} {Fore.RED}[ERROR] Connection error (will re-attempt). Retrying in 4 minutes.{Style.RESET_ALL}\n")
+        print(f"{timestamp} {Fore.RED}[ERROR] {e}{Style.RESET_ALL}")
+        print(f"{timestamp} {Fore.RED}[ERROR] Connection error (will re-attempt). Retrying in 4 minutes.{Style.RESET_ALL}")
         time.sleep(4 * 60)
 
 while True:
