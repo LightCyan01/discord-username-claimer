@@ -58,7 +58,7 @@ def claim_username(url, headers, payload):
             elif r.status_code == 401:
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 print(f"{timestamp} {Fore.RED}[ERROR] 401 - Unauthorized. Retrying in 4 minutes.{Style.RESET_ALL}\n")
-                time.sleep(2 * 60)
+                time.sleep(4 * 60)
             elif r.status_code == 400 and 'username' in r.json():
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 print(f"{timestamp} {Fore.RED}[ERROR] Username '{payload['username']}' is taken.{Style.RESET_ALL}\n")
@@ -66,12 +66,12 @@ def claim_username(url, headers, payload):
             else:
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 print(f"{timestamp} {Fore.RED}[ERROR] {r.status_code} (will re-attempt). Retrying in 4 minutes.{Style.RESET_ALL}\n")
-                time.sleep(2 * 60)
+                time.sleep(4 * 60)
     except requests.exceptions.RequestException as e:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         print(f"{timestamp} {Fore.RED}[ERROR] {e}{Style.RESET_ALL}\n")
         print(f"{timestamp} {Fore.RED}[ERROR] Connection error (will re-attempt). Retrying in 4 minutes.{Style.RESET_ALL}\n")
-        time.sleep(2 * 60)
+        time.sleep(4 * 60)
 
 while True:
     url = 'https://discord.com/api/v9/users/@me/pomelo'
@@ -83,6 +83,6 @@ while True:
         break
     except:
         print(f"\n{Fore.RED}[ERROR] Unknown error occurred.{Style.RESET_ALL}")
-        time.sleep(2 * 60)
+        time.sleep(4 * 60)
     else:
-        time.sleep(2 * 60)
+        time.sleep(4 * 60)
